@@ -1,0 +1,21 @@
+scrape_configs:
+    - job_name: 'prometheus'
+      scrape_interval: 5s
+      static_configs:
+        - targets: ['localhost:9090']
+    - job_name: 'api-gateway'
+      scrape_interval: 5s
+      static_configs:
+        - targets: ['10.95.128.22:9090']
+    - job_name: 'users'
+      scrape_interval: 5s
+      static_configs:
+        - targets: ['10.95.128.57:9090']
+    - job_name: 'books'
+      scrape_interval: 5s
+      static_configs:
+        - targets: ['10.95.128.55:9090']
+    - job_name: 'ratings'
+      scrape_interval: 5s
+      static_configs:
+        - targets: ['10.95.128.56:9090']

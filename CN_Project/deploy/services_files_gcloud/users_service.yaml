@@ -1,0 +1,44 @@
+#apiVersion: v1
+#kind: Service
+#metadata:
+#  name: users
+#spec:
+#  clusterIP: 10.95.128.57
+#  clusterIPs:
+#    - 10.95.128.57
+#  selector:
+#    app: users
+#  ports:
+#    - protocol: TCP
+#      port: 50055
+#      targetPort: 8080
+#      name: app
+#    - protocol: TCP
+#      port: 9090
+#      targetPort: 9090
+#      name: prometeus
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: users
+  namespace: default
+  labels:
+    app: users
+spec:
+  ports:
+    - protocol: TCP
+      port: 50055
+      targetPort: 50055
+      name: app
+    - protocol: TCP
+      port: 9090
+      targetPort: 9090
+      name: prometeus
+  selector:
+    app: users
+  clusterIP: 10.95.128.57
+  sessionAffinity: None
+  ipFamilies:
+    - IPv4
+  ipFamilyPolicy: SingleStack

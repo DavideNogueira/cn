@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+message User {
+  string Id = 1;
+  string username = 2;
+  string password = 3;
+  string api_key = 4;
+}
+
+message UpdateRequest{
+  string username = 1;
+  string password = 2;
+}
+
+message UpdateResponse {
+  string ok = 1;
+}
+
+
+
+message VerifyRequest{
+  string token = 1;
+}
+
+
+
+
+service UserService {
+  rpc UpdateKey(UpdateRequest) returns (UpdateResponse);
+  rpc VerifyToken(VerifyRequest) returns (UpdateResponse);
+  rpc VerifyUserToken(VerifyRequest) returns (UpdateResponse);
+}

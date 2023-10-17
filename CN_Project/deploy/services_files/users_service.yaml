@@ -1,0 +1,28 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: users
+  namespace: default
+  labels:
+    app: users
+spec:
+  ports:
+    - protocol: TCP
+      port: 50055
+      targetPort: 50055
+      nodePort: 31416
+  selector:
+    app: users
+  clusterIP: 10.108.4.101
+  clusterIPs:
+    - 10.108.4.101
+  type: LoadBalancer
+  sessionAffinity: None
+  externalTrafficPolicy: Cluster
+  ipFamilies:
+    - IPv4
+  ipFamilyPolicy: SingleStack
+  allocateLoadBalancerNodePorts: true
+  internalTrafficPolicy: Cluster
+status:
+  loadBalancer: {}

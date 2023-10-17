@@ -1,0 +1,76 @@
+syntax = "proto3";
+
+message Rating {
+  string Id = 1;
+  string Title = 2;
+  string Price = 3;
+  string User_id = 4;
+  string profileName = 5;
+  string review_helpfulness = 6;
+  string review_score = 7;
+  string review_time = 8;
+  string review_summary = 9;
+  string review_text = 10;
+  int32 book_id = 11;
+}
+
+message AddRatingRequest {
+    Rating rating = 1;
+}
+
+message RatingMessage {
+    string message = 1;
+}
+
+message UpdateRatingRequest {
+    string rating_id = 1;
+    Rating rating = 2;
+}
+
+message DeleteRatingRequest {
+    string rating_id = 1;
+}
+
+service RatingsService {
+  rpc AddRating(AddRatingRequest) returns (RatingMessage);
+  rpc UpdateRating (UpdateRatingRequest) returns (RatingMessage);
+  rpc DeleteRating (DeleteRatingRequest) returns (RatingMessage);
+  rpc GetRatingsByReviewScore (GetRatingsByReviewScoreRequest) returns (GetRatingsByReviewScoreResponse);
+  rpc GetRatingsByBookId (GetRatingsByBookIdRequest) returns (GetRatingsByBookIdResponse);
+  rpc GetRatingsByBookTitle (GetRatingsByBookTitleReuqest) returns (GetRatingsByBookTitleResponse);
+}
+
+message GetRatingsByBookTitleReuqest {
+  string book_title = 1;
+}
+
+message GetRatingsByReviewScoreRequest {
+  string review_score = 1;
+}
+
+message GetRatingsByBookIdRequest {
+  int32 book_id = 1;
+}
+
+ message GetRatingsByBookIdResponse {
+  repeated Rating ratings = 1;
+}
+
+message GetRatingsBetweenDatesRequest {
+  // The start date to retrieve ratings from (YYYY-MM-DD)
+  string start_date = 1;
+  // The end date to retrieve ratings from (YYYY-MM-DD)
+  string end_date = 2;
+}
+
+message GetRatingsBetweenDatesResponse {
+  repeated Rating ratings = 1;
+}
+
+message GetRatingsByReviewScoreResponse {
+  repeated  Rating ratings = 1;
+}
+
+message GetRatingsByBookTitleResponse {
+  repeated Rating ratings = 1;
+}

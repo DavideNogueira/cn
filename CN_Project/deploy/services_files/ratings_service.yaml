@@ -1,0 +1,28 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: ratings
+  namespace: default
+  labels:
+    app: ratings
+spec:
+  ports:
+    - protocol: TCP
+      port: 50052
+      targetPort: 50052
+      nodePort: 31415
+  selector:
+    app: ratings
+  clusterIP: 10.108.4.100
+  clusterIPs:
+    - 10.108.4.100
+  type: LoadBalancer
+  sessionAffinity: None
+  externalTrafficPolicy: Cluster
+  ipFamilies:
+    - IPv4
+  ipFamilyPolicy: SingleStack
+  allocateLoadBalancerNodePorts: true
+  internalTrafficPolicy: Cluster
+status:
+  loadBalancer: {}

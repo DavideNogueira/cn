@@ -1,0 +1,39 @@
+version: "3"
+
+services:
+
+#  gateway:
+#    build:
+#      dockerfile: Dockerfile
+#      context: ./app/api
+#    image: gateway
+#    ports:
+#      - "50050:50050"
+
+#  books:
+#    build:
+#        dockerfile: Dockerfile
+#        context: ./app/microservices/books
+#    image: books
+#    ports:
+#      - "50051:50051"
+
+#  ratings:
+#    build:
+#      dockerfile: Dockerfile
+#      context: ./app/microservices/ratings
+#    image: ratings
+#    ports:
+#      - "50052:50052"
+
+  mongodb:
+    image: mongo:6.0
+    container_name: mongo_database_CC23
+    ports:
+      - "27018:27017"
+
+    environment:
+      - MONGO_INITDB_DATABASE=mongodb_cloud
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root
+    restart: unless-stopped

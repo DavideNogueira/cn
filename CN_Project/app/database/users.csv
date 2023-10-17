@@ -1,0 +1,6 @@
+Id,admin,api_key,password,username
+0,true,,admin1,admin1
+1,true,,admin2,admin2
+2,false,,user1,user1
+3,false,,user2,user2
+4,false,,user3,user3

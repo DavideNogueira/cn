@@ -1,0 +1,388 @@
+openapi: 3.0.3
+info:
+  title: "CloudComputingAPI"
+  description: "Amazon books and Reviews API"
+  version: "1.0.0"
+
+servers:
+  - url: "/api"
+
+components:
+  schemas:
+    BookNoId:
+      type: "object"
+      properties:
+        Title:
+          type: "string"
+        description:
+          type: "string"
+        authors:
+          type: "string"
+        image:
+          type: "string"
+        previewLink:
+          type: "string"
+        publisher:
+          type: "string"
+        publishedDate:
+          type: "string"
+        infoLink:
+          type: "string"
+        categories:
+          type: "string"
+        ratingsCount:
+          type: "string"
+    Book:
+      type: "object"
+      properties:
+        Id:
+          type: "integer"
+        Title:
+          type: "string"
+        description:
+          type: "string"
+        authors:
+          type: "string"
+        image:
+          type: "string"
+        previewLink:
+          type: "string"
+        publisher:
+          type: "string"
+        publishedDate:
+          type: "string"
+        infoLink:
+          type: "string"
+        categories:
+          type: "string"
+        ratingsCount:
+          type: "string"
+    Rating:
+      type: "object"
+      properties:
+        Id:
+          type: "string"
+        Title:
+          type: "string"
+        Price:
+          type: "string"
+        User_id:
+          type: "string"
+        profileName:
+          type: "string"
+        review/helpfulness:
+          type: "string"
+        review/score:
+          type: "string"
+        review/time:
+          type: "string"
+        review/summary:
+          type: "string"
+        review/text:
+          type: "string"
+        book_id:
+          type: "integer"
+    User:
+      type: "object"
+      properties:
+        Id:
+          type: "string"
+        Name:
+          type: "string"
+        Admin:
+          type: "boolean"
+    Login:
+      type: "object"
+      properties:
+        password:
+          type: "string"
+        username:
+          type: "string"
+
+paths:
+  /books/{token}:
+    post:
+      operationId: "lib_books.post_book"
+      parameters:
+        - name: token
+          in: path
+          required: true
+          schema:
+            type: string
+            format: string
+      requestBody:
+        description: "book to create"
+        required: true
+        content:
+          application/json:
+            schema:
+              x-body-name: "book"
+              $ref: "#/components/schemas/Book"
+      tags:
+        - "Books"
+      summary: "Add a Book"
+      responses:
+        "201":
+          description: "Created"
+  /books/{book_id}:
+    get:
+      operationId: "lib_books.get_book"
+      parameters:
+      - name: book_id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      tags:
+        - "Books"
+      summary: "Get Specific Book"
+      responses:
+        "200":
+          description: "Success"   
+  /books/{book_id}/{token}:
+    delete:
+      operationId: "lib_books.delete_book"
+      parameters:
+        - name: book_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: token
+          in: path
+          required: true
+          schema:
+            type: string
+            format: string
+      tags:
+        - "Books"
+      summary: "Delete a Book"
+      responses:
+        "200":
+          description: "Success"
+    put:
+      operationId: "lib_books.put_book"
+      parameters:
+        - name: book_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: token
+          in: path
+          required: true
+          schema:
+            type: string
+            format: string
+      requestBody:
+        description: "book to update"
+        required: true
+        content:
+          application/json:
+            schema:
+              x-body-name: "book"
+              $ref: "#/components/schemas/BookNoId"
+      tags:
+        - "Books"
+      summary: "Modify a Book"
+      responses:
+        "200":
+          description: "Success"
+  /ratings/{token}:
+    post:
+      operationId: "lib_userRatings.post_rating"
+      parameters:
+        - name: token
+          in: path
+          required: true
+          schema:
+            type: string
+            format: string
+      requestBody:
+        description: "rating to create"
+        required: True
+        content:
+          application/json:
+            schema:
+              x-body-name: "rating"
+              $ref: "#/components/schemas/Rating"
+      tags:
+        - "UserRatings"
+      summary: "Create a rating"
+      responses:
+        "201":
+          description: "Created"
+  /ratings/{book_id}:
+    get:
+      operationId: "lib_userRatings.get_ratingByBookId"
+      parameters:
+      - name: book_id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      tags:
+        - "UserRatings"
+      summary: "Get Rating from specific Book"
+      responses:
+        "200":
+          description: "Success"
+  /ratings/{rating_id}/{token}:
+    put:
+      operationId: "lib_userRatings.put_rating"
+      parameters:
+      - name: rating_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: string
+      - name: token
+        in: path
+        required: True
+        schema:
+          type: string
+          format: string
+      requestBody:
+        description: "rating to update"
+        required: True
+        content:
+          application/json:
+            schema:
+              x-body-name: "rating"
+              $ref: "#/components/schemas/Rating"
+      tags:
+        - "UserRatings"
+      summary: "Update a rating"
+      responses:
+        "200":
+          description: "Success"
+    delete:
+      operationId: "lib_userRatings.delete_rating"
+      parameters:
+      - name: rating_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: string
+      - name: token
+        in: path
+        required: True
+        schema:
+          type: string
+          format: string
+      tags:
+        - "UserRatings"
+      summary: "Delete a rating"
+      responses:
+        "200":
+          description: "Success"
+  /ratingsReview/{review_score}:
+    get:
+      operationId: "lib_userRatings.get_reviewByScore"
+      parameters:
+      - name: review_score
+        in: path
+        required: true
+        schema:
+          type: string
+          format: string
+      tags:
+        - "UserRatings"
+      summary: "Get Ratings by review Score"
+      responses:
+        "200":
+          description: "Success"
+  /ratingsReviewByTitle/{book_title}:
+    get:
+      operationId: "lib_userRatings.get_ratings_by_book_name"
+      parameters:
+      - name: book_title
+        in: path
+        required: true
+        schema:
+          type: string
+          format: string
+      tags:
+        - "UserRatings"
+      summary: "Get Ratings by book name"
+      responses:
+        "200":
+          description: "Success"
+  /books/dates:
+    get:
+      operationId: "lib_userRatings.get_ratings_between_dates"
+      parameters:
+        - name: start_date
+          in: query
+          description: Start date (YYYY-MM-DD)
+          required: true
+          schema:
+            type: string
+            format: string
+        - name: end_date
+          in: query
+          description: End date (YYYY-MM-DD)
+          required: true
+          schema:
+            type: string
+            format: string
+      tags:
+      - "UserRatings"
+      summary: "Get books between two dates"
+      responses:
+        "200":
+          description: All books have been successfully retrieved
+        "400":
+          description: If the start_date or end_date are invalid or not provided
+  /booksPrice/{book_price}:
+    get:
+      operationId: "lib_userRatings.get_bookByPrice"
+      parameters:
+      - name: book_price
+        in: path
+        required: true
+        schema:
+          type: string
+          format: string
+      tags:
+        - "UserRatings"
+      summary: "Get books under specific price"
+      responses:
+        "200":
+          description: "Success"
+
+
+  /login/{username}/{password}:
+    post:
+      operationId: "lib_users.login"
+      summary: User login
+      description: Logs in a user and generates an access token
+      parameters:
+      - name: username
+        in: path
+        required: true
+        schema:
+          type: string
+          format: string
+      - name: password
+        in: path
+        required: true
+        schema:
+          type: string
+          format: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string

@@ -1,0 +1,3 @@
+python3 populateDatabase.py
+python3 InsertForeignKeyInBooksRatings.py
+python3 InsertAPIKEY.py

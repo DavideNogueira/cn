@@ -1,0 +1,32 @@
+// commands to populate mongo container
+apt update
+apt install nano -y
+apt install python3 -y
+apt install pip -y
+pip install pymongo
+python3 InsertAPIKEY.py 
+python3 InsertForeignKeyInBooksRatings.py 
+python3 populateDatabase.py 
+
+//get inside mongo container
+kubectl cp database mongo-fb976fd79-4t5p8:/
+kubectl exec -it mongo-fb976fd79-4t5p8 /bin/bash
+
+//forward commands
+kubectl port-forward svc/api-gateway --address 0.0.0.0 8080:50050
+kubectl port-forward --namespace=ingress-nginx service/ingress-nginx-controller 8080:80
+kubectl port-forward svc/metrics-server --namespace kube-system --address 0.0.0.0 8080:443
+kubectl port-forward service/prometheus-svc 9090:9090
+kubectl port-forward service/grafana 8082:3000
+kubectl port-forward service/api-gateway-service 8080:8080
+kubectl port-forward service/api-gateway-service 8081:9090
+kubectl port-forward service/locust-service 8083:8089
+
+// get logs
+kubectl get deployment metrics-server -n kube-system
+kubectl get all -n kube-system
+kubectl describe hpa api-gateway-hpa
+kubectl top pods
+
+// checkip
+curl ifconfig.me.

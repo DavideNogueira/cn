@@ -1,0 +1,28 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: books
+  namespace: default
+  labels:
+    app: books
+spec:
+  ports:
+    - protocol: TCP
+      port: 50051
+      targetPort: 50051
+      nodePort: 30551
+  selector:
+    app: books
+  clusterIP: 10.101.107.196
+  clusterIPs:
+    - 10.101.107.196
+  type: LoadBalancer
+  sessionAffinity: None
+  externalTrafficPolicy: Cluster
+  ipFamilies:
+    - IPv4
+  ipFamilyPolicy: SingleStack
+  allocateLoadBalancerNodePorts: true
+  internalTrafficPolicy: Cluster
+status:
+  loadBalancer: {}
